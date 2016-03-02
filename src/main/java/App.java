@@ -19,8 +19,6 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-
-
     //CREATE AUTHOR OBJECT
     post("/author/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -64,18 +62,6 @@ public class App {
       return null;
     });
 
-    //UPDATE BOOK AUTHOR
-    // post("/book/:id/update-author", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   Book book = Book.find(Integer.parseInt(request.params(":id")));
-    //   String newAuthor = request.queryParams("newBookAuthor");
-    //   book.updateAuthor(newAuthor);
-    //
-    //   response.redirect(String.format("/book/%d", book.getId()));
-    //
-    //   return null;
-    // });
-
     //DELETE A BOOK
     post("/book/:id/delete", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -99,5 +85,22 @@ public class App {
       return null;
     });
 
+    //CHECKOUT BOOK OBJECT
+    post("/book/:id/checkout", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      book.checkOut();
+      response.redirect("/");
+      return null;
+    });
+
+    //CHECKIN BOOK OBJECT
+    post("/book/:id/checkin", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      book.checkIn();
+      response.redirect("/");
+      return null;
+    });
   }
 }

@@ -31,6 +31,12 @@ book.vtl
 </form>
 <br>
 <br>
+<form class="form-inline" action="/book/$book.getId()/checkout" method="post">
+  <button type="submit" class="btn btn-caution">Checkout this book</button>
+</form>
+<form class="form-inline" action="/book/$book.getId()/checkin" method="post">
+  <button type="submit" class="btn btn-caution">Checkin this book</button>
+</form>
 <form class="form-inline" action="/book/$book.getId()/delete" method="post">
   <button type="submit" class="btn btn-danger">Delete this book</button>
 </form>

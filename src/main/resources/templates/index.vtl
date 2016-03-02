@@ -24,7 +24,11 @@ index.vtl
 <h2>List all Books</h2>
 <ul>
 #foreach ($book in $books)
-  <li><a href="/book/$book.getId()">$book.getTitle()</a></li>
+  #if($book.getIsCheckedOut() == true)
+  <li><a href="/book/$book.getId()">$book.getTitle()</a>- Currently Checked Out</li>
+	#else
+	<li><a href="/book/$book.getId()">$book.getTitle()</a>- Currently Available</li>
+	#end
 #end
 </ul>
 <br>
