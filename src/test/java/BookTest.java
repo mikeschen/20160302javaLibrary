@@ -22,12 +22,6 @@ public class BookTest {
 		assertEquals("Lord of the Rings", testBook.getTitle());
 	}
 
-	// @Test
-	// public void getAuthor_returnsAuthorPropertyOfBookObject_true(){
-	// 	Book testBook = new Book("Lord of the Rings", "JRR Tolkien");
-	// 	assertEquals("JRR Tolkien", testBook.getAuthor());
-	// }
-
 	@Test
 	public void all_emptyAtFirst() {
 		assertEquals(Book.all().size(), 0);
@@ -63,14 +57,6 @@ public class BookTest {
 		assertEquals(Book.all().get(0).getTitle(), "Return of the King");
 	}
 
-	// @Test
-	// public void updateAuthor_updatesAuthorPropertyOfBookObject_true(){
-	// 	Book testBook = new Book("Lord of the Rings", "JRR Tolkien");
-	// 	testBook.save();
-	// 	testBook.updateAuthor("JK Rowling");
-	// 	assertEquals(Book.all().get(0).getAuthor(), "JK Rowling");
-	// }
-
 	@Test
 	public void deleteBook_deletesBook_true(){
 		Book testBook = new Book("Lord of the Rings");
@@ -90,6 +76,24 @@ public class BookTest {
 		testBook.assignToAuthor(testAuthor.getId());
 		Author savedAuthor = testBook.getAuthors().get(0);
 		assertTrue(testAuthor.equals(savedAuthor));
+	}
+
+	//test to check out a book
+	@Test
+	public void checkOut_changeValueOfIsCheckedOutPropertyFromFalseToTrue_true(){
+		Book testBook = new Book("Lord of the Rings");
+    testBook.save();
+		testBook.checkOut();
+		assertEquals(Book.find(testBook.getId()).getIsCheckedOut(), true);
+	}
+
+	@Test
+	public void checkIn_changeValueOfIsCheckedOutPropertyFromTrueToFalse_true(){
+		Book testBook = new Book("Lord of the Rings");
+		testBook.save();
+		testBook.checkOut();
+		testBook.checkIn();
+		assertEquals(Book.find(testBook.getId()).getIsCheckedOut(), false);
 	}
 
 }

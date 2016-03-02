@@ -14,6 +14,9 @@ public class DatabaseRule extends ExternalResource {
 
       String deleteAuthorsQuery = "DELETE FROM authors *;";
       con.createQuery(deleteAuthorsQuery).executeUpdate();
+
+      String deleteAuthorsBooksQuery = "DELETE FROM authors_books *;";
+      con.createQuery(deleteAuthorsBooksQuery).executeUpdate();
     }
   }
 }

@@ -1,9 +1,16 @@
 import java.util.*;
 import org.sql2o.*;
 
+// As a patron, I want to check a book out, so that I can take it home with me.
+
+//implement a property to keep track of checked out status
+//implement a method to checkout a book which will change the checked out status
+//implement a method to checkin a book which will change the checked out status
+
 public class Book{
   private int id;
   private String title;
+  private boolean isCheckedOut;
 
   public Book (String title){
     this.title = title;
@@ -13,12 +20,12 @@ public class Book{
     return title;
   }
 
-  // public String getAuthor(){
-  //   return author;
-  // }
-
   public int getId(){
     return id;
+  }
+
+  public boolean getIsCheckedOut(){
+    return isCheckedOut;
   }
 
   @Override
@@ -39,9 +46,9 @@ public class Book{
   }
 
   public void save(){
-    String sql = "INSERT INTO books (title) VALUES (:title)";
+    String sql = "INSERT INTO books (title, isCheckedOut) VALUES (:title, :isCheckedOut)";
     try(Connection con = DB.sql2o.open()){
-      this.id = (int) con.createQuery(sql, true).addParameter("title", this.title).executeUpdate().getKey();
+      this.id = (int) con.createQuery(sql, true).addParameter("title", this.title).addParameter("isCheckedOut", this.isCheckedOut).executeUpdate().getKey();
     }
   }
 
@@ -59,13 +66,6 @@ public class Book{
       con.createQuery(sql).addParameter("newTitle", newTitle).addParameter("id", this.getId()).executeUpdate();
     }
   }
-
-  // public void updateAuthor(String newAuthor){
-  //   String sql = "UPDATE books SET author = :newAuthor WHERE id = :id ";
-  //   try(Connection con = DB.sql2o.open()){
-  //     con.createQuery(sql).addParameter("newAuthor", newAuthor).addParameter("id", this.getId()).executeUpdate();
-  //   }
-  // }
 
   public void delete(){
     String sql = "DELETE FROM books WHERE id=:id";
@@ -90,15 +90,18 @@ public class Book{
 		}
 	}
 
-  //getStudents method using JOINS
-	// public List<Student> getStudents(){
-	// 	try(Connection con = DB.sql2o.open()){
-	// 		String sql = "SELECT students.id, students.name, students.date_of_enrollment AS dateOfEnrollment FROM courses JOIN students_courses ON (courses.id = students_courses.course_id) JOIN students ON (students_courses.student_id = students.id) WHERE courses.id = :course_id;";
-	// 		List<Student> students = con.createQuery(sql).addParameter("course_id", this.getId()).executeAndFetch(Student.class);
-	// 		return students;
-	// 	}
-	// }
+  public void checkOut() {
+    try(Connection con = DB.sql2o.open()){
+    String sql = "UPDATE books SET isCheckedOut = true WHERE id=:id";
+    con.createQuery(sql).addParameter("id", id).executeUpdate();
+    }
+  }
 
-
+  public void checkIn() {
+    try(Connection con = DB.sql2o.open()){
+    String sql = "UPDATE books SET isCheckedOut = false WHERE id=:id";
+    con.createQuery(sql).addParameter("id", id).executeUpdate();
+    }
+  }
 
 }
