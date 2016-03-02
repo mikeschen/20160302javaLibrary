@@ -1,0 +1,28 @@
+book.vtl
+
+<h1>Book: $book.getTitle()</h1>
+<br>
+<p><strong>Title:</strong> $book.getTitle()</p>
+<p><strong>Author:</strong> $book.getAuthor()</p>
+<p><strong>Book ID:</strong> $book.getId()</p>
+
+<form action="/book/$book.getId()/update-title" method="post" class="form-inline">
+	<div class="form-group">
+		<input id="newBookTitle" name="newBookTitle" type="text" class="form-control" placeholder="New Book Title">
+	</div>
+	<button type="submit" class="btn btn-success">Update Book Title</button>
+</form>
+<br>
+<form action="/book/$book.getId()/update-author" method="post" class="form-inline">
+	<div class="form-group">
+		<input id="newBookAuthor" name="newBookAuthor" type="text" class="form-control" placeholder="New Book Author">
+	</div>
+	<button type="submit" class="btn btn-success">Update Book Author</button>
+</form>
+<br>
+<br>
+<form class="form-inline" action="/book/$book.getId()/delete" method="post">
+  <button type="submit" class="btn btn-danger">Delete this book</button>
+</form>
+<br>
+<a href="/">Back to Main<a>

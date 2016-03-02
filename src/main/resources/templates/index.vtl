@@ -1,0 +1,19 @@
+index.vtl
+
+<h3>Add a Book</h3>
+<hr>
+<!-- FORM TO ADD BOOK -->
+<form action="/books" method="post" class="form-inline">
+	<div class="form-group">
+		<input id="bookTitle" name="bookTitle" type="text" class="form-control" placeholder="Title">
+		<input id="bookAuthor" name="bookAuthor" type="text" class="form-control" placeholder="Author">
+		<button type="submit" class="btn btn-success">Add Book</button>
+	</div>
+</form>
+
+<h2>List all Books</h2>
+<ul>
+#foreach ($book in $books)
+  <li><a href="/book/$book.getId()">$book.getTitle() by $book.getAuthor()</a></li>
+#end
+</ul>
