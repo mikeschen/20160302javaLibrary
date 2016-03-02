@@ -46,6 +46,7 @@ public class App {
 			model.put("book", book);
       model.put("assignedAuthors", book.getAuthors());
       model.put("authors", Author.all());
+      model.put("copy", book.getCopyObject());
 			model.put("template", "templates/book.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -102,5 +103,23 @@ public class App {
       response.redirect("/");
       return null;
     });
+
+    //CREATE NEW COPIES OBJECT
+    post("/book/:id/copy/", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+
+      int count = Integer.parseInt(request.queryParams("copyCount"));
+
+      Copy newCopy = new Copy(count);
+
+      newCopy.save(book.getId());
+
+      response.redirect("/");
+
+      return null;
+    });
+
   }
 }

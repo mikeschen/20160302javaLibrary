@@ -4,7 +4,7 @@ book.vtl
 <br>
 <p><strong>Title:</strong> $book.getTitle()</p>
 <p><strong>Book ID:</strong> $book.getId()</p>
-<p><strong>Number of available copies:</strong>...</p>
+<p><strong>Number of available copies:</strong>$copy.getCount()</p>
 <form action="/book/$book.getId()/assign-author" method="post" class="form-inline">
 <div class="form-group">
 	<label for="authorId">Select an Author</label>
@@ -23,6 +23,13 @@ book.vtl
   <li>$author.getName()</li>
 #end
 </ul>
+<br>
+<form action="/book/$book.getId()/copy/" method="post" class="form-inline">
+	<div class="form-group">
+		<input id="copyCount" name="copyCount" type="number" class="form-control">
+	</div>
+	<button type="submit" class="btn btn-success">Number of copies in stock</button>
+</form>
 <br>
 <form action="/book/$book.getId()/update-title" method="post" class="form-inline">
 	<div class="form-group">

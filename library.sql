@@ -10,14 +10,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: authors; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
+-- Name: authors; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
 --
 
 CREATE TABLE authors (
@@ -42,7 +42,7 @@ CREATE TABLE authors (
 ALTER TABLE authors OWNER TO "Guest";
 
 --
--- Name: authors_books; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
+-- Name: authors_books; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
 --
 
 CREATE TABLE authors_books (
@@ -97,7 +97,7 @@ ALTER SEQUENCE authors_id_seq OWNED BY authors.id;
 
 
 --
--- Name: books; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
+-- Name: books; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
 --
 
 CREATE TABLE books (
@@ -131,7 +131,7 @@ ALTER SEQUENCE books_id_seq OWNED BY books.id;
 
 
 --
--- Name: copies; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
+-- Name: copies; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
 --
 
 CREATE TABLE copies (
@@ -261,7 +261,7 @@ SELECT pg_catalog.setval('copies_id_seq', 1, false);
 
 
 --
--- Name: authors_books_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
+-- Name: authors_books_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
 --
 
 ALTER TABLE ONLY authors_books
@@ -269,7 +269,7 @@ ALTER TABLE ONLY authors_books
 
 
 --
--- Name: authors_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
+-- Name: authors_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
 --
 
 ALTER TABLE ONLY authors
@@ -277,7 +277,7 @@ ALTER TABLE ONLY authors
 
 
 --
--- Name: books_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
+-- Name: books_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
 --
 
 ALTER TABLE ONLY books
@@ -285,7 +285,7 @@ ALTER TABLE ONLY books
 
 
 --
--- Name: copies_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
+-- Name: copies_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
 --
 
 ALTER TABLE ONLY copies
@@ -305,4 +305,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-
