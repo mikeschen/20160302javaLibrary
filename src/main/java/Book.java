@@ -109,15 +109,15 @@ public class Book{
 
   public void checkOut() {
     try(Connection con = DB.sql2o.open()){
-    String sql = "UPDATE books SET isCheckedOut = true WHERE id=:id";
-    con.createQuery(sql).addParameter("id", id).executeUpdate();
+    String sql = "UPDATE copies SET count=count-1 WHERE book_id = :book_id";
+    con.createQuery(sql).addParameter("book_id", id).executeUpdate();
     }
   }
 
   public void checkIn() {
     try(Connection con = DB.sql2o.open()){
-    String sql = "UPDATE books SET isCheckedOut = false WHERE id=:id";
-    con.createQuery(sql).addParameter("id", id).executeUpdate();
+    String sql = "UPDATE copies SET count=count+1 WHERE book_id = :book_id";
+    con.createQuery(sql).addParameter("book_id", id).executeUpdate();
     }
   }
 

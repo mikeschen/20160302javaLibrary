@@ -91,7 +91,8 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Book book = Book.find(Integer.parseInt(request.params(":id")));
       book.checkOut();
-      response.redirect("/");
+      String url = String.format("/book/%d", book.getId());
+      response.redirect(url);
       return null;
     });
 
@@ -100,7 +101,8 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Book book = Book.find(Integer.parseInt(request.params(":id")));
       book.checkIn();
-      response.redirect("/");
+      String url = String.format("/book/%d", book.getId());
+      response.redirect(url);
       return null;
     });
 
@@ -116,7 +118,8 @@ public class App {
 
       newCopy.save(book.getId());
 
-      response.redirect("/");
+      String url = String.format("/book/%d", book.getId());
+      response.redirect(url);
 
       return null;
     });
