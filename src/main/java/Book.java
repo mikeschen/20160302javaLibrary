@@ -91,23 +91,6 @@ public class Book{
 		}
 	}
 
-  //getCopyObject method using JOINS
-  // public Copy getCopyObject(){
-  //   String sql = "SELECT id, count, book_id AS id FROM copies where book_id = :book_id";
-  //   // String sql = "SELECT * FROM copies where book_id = :book_id";
-  //   try(Connection con = DB.sql2o.open()){
-  //     Copy copy = con.createQuery(sql).addParameter("book_id", this.id).executeAndFetchFirst(Copy.class);
-  //     return copy;
-  //   }
-  // }
-
-  //   try(Connection con = DB.sql2o.open()){
-  //     String sql = "SELECT authors.id, authors.name FROM authors JOIN authors_books ON (authors.id = authors_books.author_id) JOIN books ON (authors_books.book_id = books.id) WHERE books.id = :book_id;";
-  //     List<Author> authors = con.createQuery(sql).addParameter("book_id", this.getId()).executeAndFetch(Author.class);
-  //     return authors;
-  //   }
-  // }
-
   public void checkOut() {
     try(Connection con = DB.sql2o.open()){
     String sql = "UPDATE copies SET count=count-1 WHERE book_id = :book_id";

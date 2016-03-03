@@ -66,6 +66,10 @@ public class Checkout {
     try(Connection con = DB.sql2o.open()){
       this.id = (int) con.createQuery(sql, true).addParameter("patronId", this.patronId).addParameter("bookId", this.bookId).addParameter("checkout_date", this.checkout_date).addParameter("due_date", this.due_date).addParameter("returned", this.returned).executeUpdate().getKey();
     }
+    try(Connection con = DB.sql2o.open()){
+      String copy = "UPDATE books SET copies=copies-1 WHERE id = :book_id";
+      con.createQuery(copy).addParameter("book_id", this.bookId).executeUpdate();
+    }
   }
 
   public static List<Checkout> all() {
