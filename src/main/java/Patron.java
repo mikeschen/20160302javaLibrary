@@ -63,4 +63,12 @@ public class Patron{
 	  }
 	}
 
+	public List<Checkout> getCheckouts() {
+			try(Connection con = DB.sql2o.open()){
+				String sql = "SELECT checkouts.id, checkouts.patron_id AS patronId, checkouts.book_id AS bookId, checkouts.checkout_date, checkouts.due_date, checkouts.returned FROM checkouts JOIN books ON (checkouts.book_id = books.id) JOIN patrons ON (checkouts.patron_id = patrons.id) WHERE patrons.id = :patron_id;";
+				List<Checkout> checkouts = con.createQuery(sql).addParameter("patron_id", this.getId()).executeAndFetch(Checkout.class);
+				return checkouts;
+			}
+		}
+
 }

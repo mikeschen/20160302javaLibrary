@@ -12,13 +12,13 @@ public class BookTest {
 
 	@Test
 	public void instatiatesBookObjectCorrectly_true(){
-		Book testBook = new Book("Lord of the Rings");
+		Book testBook = new Book("Lord of the Rings", 1);
 		assertTrue(testBook instanceof Book);
 	}
 
 	@Test
 	public void getTitle_returnsTitlePropertyOfBookObject_true(){
-		Book testBook = new Book("Lord of the Rings");
+		Book testBook = new Book("Lord of the Rings", 1);
 		assertEquals("Lord of the Rings", testBook.getTitle());
 	}
 
@@ -29,21 +29,21 @@ public class BookTest {
 
 	@Test
   public void equals_returnsTrueIfAuthorsAndIdAretheSame() {
-		Book firstBook = new Book("Lord of the Rings");
-		Book secondBook = new Book("Lord of the Rings");
+		Book firstBook = new Book("Lord of the Rings", 1);
+		Book secondBook = new Book("Lord of the Rings", 1);
     assertTrue(firstBook.equals(secondBook));
   }
 
 	@Test
 	public void save_savesIntoDatabase_true() {
-		Book testBook = new Book("Lord of the Rings");
+		Book testBook = new Book("Lord of the Rings", 1);
 		testBook.save();
 		assertTrue(Book.all().get(0).equals(testBook));
 	}
 
 	@Test
 	public void finds_findBookInDatabase_true() {
-		Book testBook = new Book("Lord of the Rings");
+		Book testBook = new Book("Lord of the Rings", 1);
 		testBook.save();
 		Book savedBook = Book.find(testBook.getId());
 		assertTrue(testBook.equals(savedBook));
@@ -51,7 +51,7 @@ public class BookTest {
 
 	@Test
 	public void updateTitle_updatesTitlePropertyOfBookObject_true(){
-		Book testBook = new Book("Lord of the Rings");
+		Book testBook = new Book("Lord of the Rings", 1);
 		testBook.save();
 		testBook.updateTitle("Return of the King");
 		assertEquals(Book.all().get(0).getTitle(), "Return of the King");
@@ -59,7 +59,7 @@ public class BookTest {
 
 	@Test
 	public void deleteBook_deletesBook_true(){
-		Book testBook = new Book("Lord of the Rings");
+		Book testBook = new Book("Lord of the Rings", 1);
 		testBook.save();
 		assertEquals(Book.all().size(), 1);
 		testBook.delete();
@@ -68,7 +68,7 @@ public class BookTest {
 
 	@Test
 	public void assignToAuthor_createsRecordInAuthorsBooksTable_true(){
-		Book testBook = new Book("Lord of the Rings");
+		Book testBook = new Book("Lord of the Rings", 1);
 		testBook.save();
 		Author testAuthor = new Author("JRR Tolkien");
 		testAuthor.save();
@@ -78,22 +78,5 @@ public class BookTest {
 		assertTrue(testAuthor.equals(savedAuthor));
 	}
 
-	//test to check out a book
-	// @Test
-	// public void checkOut_changeValueOfIsCheckedOutPropertyFromFalseToTrue_true(){
-	// 	Book testBook = new Book("Lord of the Rings");
- //    testBook.save();
-	// 	testBook.checkOut();
-	// 	assertEquals(Book.find(testBook.getId()).getIsCheckedOut(), true);
-	// }
-
-	@Test
-	public void checkIn_changeValueOfIsCheckedOutPropertyFromTrueToFalse_true(){
-		Book testBook = new Book("Lord of the Rings");
-		testBook.save();
-		testBook.checkOut();
-		testBook.checkIn();
-		assertEquals(Book.find(testBook.getId()).getIsCheckedOut(), false);
-	}
 
 }

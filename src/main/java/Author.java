@@ -3,11 +3,9 @@ import org.sql2o.*;
 
 public class Author {
 
-  //MEMBER VARIABLES
   private int id;
   private String name;
 
-  //CONSTRUCTOR
   public Author(String name){
     this.name = name;
   }
@@ -74,5 +72,4 @@ public class Author {
         return books;
     }
   }
-
 }

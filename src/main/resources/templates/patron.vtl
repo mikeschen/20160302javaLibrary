@@ -1,3 +1,5 @@
+patron.vtl
+
 <h1>Patron: $patron.getFullName()</h1>
 <br>
 <p><strong>First Name:</strong> $patron.getFirstName()</p>
@@ -5,7 +7,9 @@
 <br>
 <h3>All Checked Out Books</h3>
 <ul>
-<li></li>
+#foreach ($checkout in $checkouts)
+  <li><a href=$>$checkout.getBook().getTitle() - $checkout.getDate()</a></li>
+#end
 </ul>
 <br>
 <a href="/">Back to Main</a>

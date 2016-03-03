@@ -4,7 +4,7 @@ book.vtl
 <br>
 <p><strong>Title:</strong> $book.getTitle()</p>
 <p><strong>Book ID:</strong> $book.getId()</p>
-<p><strong>Number of available copies:</strong>$copy.getCount()</p>
+<p><strong>Number of available copies:</strong> $book.getCopies()</p>
 <br>
 <h3>List of Authors for $book.getTitle()</h3>
 <ul>
@@ -25,13 +25,6 @@ book.vtl
 <button type="submit" class="btn btn-success">Assign To Author</button>
 </form>
 <br>
-<form action="/book/$book.getId()/copy/" method="post" class="form-inline">
-	<div class="form-group">
-		<input id="copyCount" name="copyCount" type="number" class="form-control">
-	</div>
-	<button type="submit" class="btn btn-success">Set Initial Count</button>
-</form>
-<br>
 <form action="/book/$book.getId()/update-title" method="post" class="form-inline">
 	<div class="form-group">
 		<input id="newBookTitle" name="newBookTitle" type="text" class="form-control" placeholder="New Book Title">
@@ -42,10 +35,6 @@ book.vtl
 <br>
 <form class="form-inline" action="/book/$book.getId()/checkout" method="get">
   <button type="submit" class="btn btn-caution">Checkout this book</button>
-</form>
-<br>
-<form class="form-inline" action="/book/$book.getId()/checkin" method="post">
-  <button type="submit" class="btn btn-caution">Checkin this book</button>
 </form>
 <br>
 <form class="form-inline" action="/book/$book.getId()/delete" method="post">

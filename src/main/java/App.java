@@ -12,11 +12,9 @@ public class App {
     get("/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/index.vtl");
-
       model.put("books", Book.all());
       model.put("authors", Author.all());
       model.put("patrons", Patron.all());
-
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -34,7 +32,8 @@ public class App {
     post("/book/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       String title = request.queryParams("bookTitle");
-      Book newBook = new Book(title);
+      int copies = Integer.parseInt(request.queryParams("bookCopies"));
+      Book newBook = new Book(title, copies);
       newBook.save();
       response.redirect("/");
       return null;
@@ -54,17 +53,12 @@ public class App {
     //CREATE CHECKOUT OBJECT
     post("/book/:id/checkout/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-
       Book book = Book.find(Integer.parseInt(request.params(":id")));
       int bookId = book.getId();
-
       int patronId = Integer.parseInt(request.queryParams("patronId"));
-
       Checkout checkout = new Checkout(patronId, bookId);
       checkout.save();
-
       model.put("book", book);
-
       response.redirect("/");
       return null;
     });
@@ -76,8 +70,7 @@ public class App {
 			model.put("book", book);
       model.put("assignedAuthors", book.getAuthors());
       model.put("authors", Author.all());
-      model.put("copy", book.getCopyObject());
-			model.put("template", "templates/book.vtl");
+ 		  model.put("template", "templates/book.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -96,6 +89,7 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Patron patron = Patron.find(Integer.parseInt(request.params("id")));
       model.put("patron", patron);
+      model.put("checkouts", patron.getCheckouts());
       model.put("template", "templates/patron.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -140,37 +134,6 @@ public class App {
       return null;
     });
 
-    //CHECKOUT BOOK OBJECT
-    // post("/book/:id/checkout", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   Book book = Book.find(Integer.parseInt(request.params(":id")));
-    //   book.checkOut();
-    //   String url = String.format("/book/%d", book.getId());
-    //   response.redirect(url);
-    //   return null;
-    // });
-
-    //CHECKIN BOOK OBJECT
-    post("/book/:id/checkin", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      Book book = Book.find(Integer.parseInt(request.params(":id")));
-      book.checkIn();
-      String url = String.format("/book/%d", book.getId());
-      response.redirect(url);
-      return null;
-    });
-
-    //CREATE NEW COPIES OBJECT
-    post("/book/:id/copy/", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      Book book = Book.find(Integer.parseInt(request.params(":id")));
-      int count = Integer.parseInt(request.queryParams("copyCount"));
-      Copy newCopy = new Copy(count);
-      newCopy.save(book.getId());
-      String url = String.format("/book/%d", book.getId());
-      response.redirect(url);
-      return null;
-    });
 
   }
 }

@@ -10,10 +10,11 @@ import org.sql2o.*;
 public class Book{
   private int id;
   private String title;
-  private boolean isCheckedOut;
+  private int copies;
 
-  public Book (String title){
+  public Book (String title, int copies){
     this.title = title;
+    this.copies = copies;
   }
 
   public String getTitle(){
@@ -24,8 +25,8 @@ public class Book{
     return id;
   }
 
-  public boolean getIsCheckedOut(){
-    return isCheckedOut;
+  public int getCopies(){
+    return copies;
   }
 
   @Override
@@ -46,9 +47,9 @@ public class Book{
   }
 
   public void save(){
-    String sql = "INSERT INTO books (title, isCheckedOut) VALUES (:title, :isCheckedOut)";
+    String sql = "INSERT INTO books (title, copies) VALUES (:title, :copies)";
     try(Connection con = DB.sql2o.open()){
-      this.id = (int) con.createQuery(sql, true).addParameter("title", this.title).addParameter("isCheckedOut", this.isCheckedOut).executeUpdate().getKey();
+      this.id = (int) con.createQuery(sql, true).addParameter("title", this.title).addParameter("copies", this.copies).executeUpdate().getKey();
     }
   }
 
@@ -91,14 +92,14 @@ public class Book{
 	}
 
   //getCopyObject method using JOINS
-  public Copy getCopyObject(){
-    String sql = "SELECT id, count, book_id AS id FROM copies where book_id = :book_id";
-    // String sql = "SELECT * FROM copies where book_id = :book_id";
-    try(Connection con = DB.sql2o.open()){
-      Copy copy = con.createQuery(sql).addParameter("book_id", this.id).executeAndFetchFirst(Copy.class);
-      return copy;
-    }
-  }
+  // public Copy getCopyObject(){
+  //   String sql = "SELECT id, count, book_id AS id FROM copies where book_id = :book_id";
+  //   // String sql = "SELECT * FROM copies where book_id = :book_id";
+  //   try(Connection con = DB.sql2o.open()){
+  //     Copy copy = con.createQuery(sql).addParameter("book_id", this.id).executeAndFetchFirst(Copy.class);
+  //     return copy;
+  //   }
+  // }
 
   //   try(Connection con = DB.sql2o.open()){
   //     String sql = "SELECT authors.id, authors.name FROM authors JOIN authors_books ON (authors.id = authors_books.author_id) JOIN books ON (authors_books.book_id = books.id) WHERE books.id = :book_id;";
