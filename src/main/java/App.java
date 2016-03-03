@@ -15,6 +15,7 @@ public class App {
 
       model.put("books", Book.all());
       model.put("authors", Author.all());
+      model.put("patrons", Patron.all());
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -45,12 +46,10 @@ public class App {
       String firstName = request.queryParams("patronFirstName");
       String lastName = request.queryParams("patronLastName");
       Patron newPatron = new Patron(firstName, lastName);
-      // newPatron.save();
+      newPatron.save();
       response.redirect("/");
       return null;
     });
-
-    
 
     //VIEW INDIVIDUAL BOOK
     get("/book/:id", (request, response) -> {
