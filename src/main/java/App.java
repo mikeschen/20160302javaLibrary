@@ -51,6 +51,24 @@ public class App {
       return null;
     });
 
+    //CREATE CHECKOUT OBJECT
+    post("/book/:id/checkout/new", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      int bookId = book.getId();
+
+      int patronId = Integer.parseInt(request.queryParams("patronId"));
+
+      Checkout checkout = new Checkout(patronId, bookId);
+      checkout.save();
+
+      model.put("book", book);
+
+      response.redirect("/");
+      return null;
+    });
+
     //VIEW INDIVIDUAL BOOK
     get("/book/:id", (request, response) -> {
 			HashMap<String, Object> model = new HashMap<String, Object>();
@@ -79,6 +97,16 @@ public class App {
       Patron patron = Patron.find(Integer.parseInt(request.params("id")));
       model.put("patron", patron);
       model.put("template", "templates/patron.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //VIEW FORM TO CHECKOUT OUT A BOOK
+    get("/book/:id/checkout", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      model.put("book", book);
+      model.put("patrons", Patron.all());
+      model.put("template", "templates/book-checkout-form.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -113,14 +141,14 @@ public class App {
     });
 
     //CHECKOUT BOOK OBJECT
-    post("/book/:id/checkout", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      Book book = Book.find(Integer.parseInt(request.params(":id")));
-      book.checkOut();
-      String url = String.format("/book/%d", book.getId());
-      response.redirect(url);
-      return null;
-    });
+    // post("/book/:id/checkout", (request, response) -> {
+    //   HashMap<String, Object> model = new HashMap<String, Object>();
+    //   Book book = Book.find(Integer.parseInt(request.params(":id")));
+    //   book.checkOut();
+    //   String url = String.format("/book/%d", book.getId());
+    //   response.redirect(url);
+    //   return null;
+    // });
 
     //CHECKIN BOOK OBJECT
     post("/book/:id/checkin", (request, response) -> {

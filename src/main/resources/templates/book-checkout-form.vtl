@@ -1,0 +1,28 @@
+book-checkout-form.vtl
+
+<h1>$book.getTitle()</h1>
+
+<p>Select patron who will be checking out this book</p>
+
+<form action="/book/$book.getId()/checkout/new" method="post" class="form-inline">
+
+<!--I need to pull in all patrons-->
+<div class="form-group">
+	<select id="patronId" name="patronId" type="text">
+	#foreach($patron in $patrons)
+	<option value="$patron.getId()">$patron.getFullName()</option>
+	#end
+	</select>
+</div>
+
+<!--I need to pull in the specific book to be checked out-->
+<input id="bookId" name="bookId" type="hidden" value="$book.getId()">
+
+<!-- pull in a checkout date -->
+<!-- <div class="form-group">
+  <label>Checkout Date</label>
+  <input id="checkOutDate" name="checkOutDate" type="text" class="form-control" placeholder="yyyy-MM-dd">
+</div> -->
+
+<button type="submit" class="btn btn-success">Checkout Book</button>
+</form>
