@@ -73,6 +73,15 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    // VIEW INDIVIDUAL PATRON
+    get("/patron/:id", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Patron patron = Patron.find(Integer.parseInt(request.params("id")));
+      model.put("patron", patron);
+      model.put("template", "templates/patron.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     //UPDATE BOOK TITLE
     post("/book/:id/update-title", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();

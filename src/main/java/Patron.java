@@ -20,6 +20,10 @@ public class Patron{
 		return lastName;
 	}
 
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+
 	public int getId(){
 		return id;
 	}
@@ -49,5 +53,14 @@ public class Patron{
     	this.id = (int) con.createQuery(sql, true).addParameter("firstName", this.getFirstName()).addParameter("lastName", this.getLastName()).executeUpdate().getKey();
     }
   }
+
+	public static Patron find(int id){
+		String sql = "SELECT id, first_name AS firstName, last_name AS lastName FROM patrons WHERE id=:id";
+		// String sql = "SELECT id, first_name, last_name FROM patrons WHERE id=:id";
+    try(Connection con = DB.sql2o.open()) {
+			Patron patron = con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Patron.class);
+			return patron;
+	  }
+	}
 
 }

@@ -33,6 +33,11 @@ index.vtl
 <br>
 <br>
 <h2>Patrons List</h2>
+<ul>
+#foreach ($patron in $patrons)
+  <li><a href="/patron/$patron.getId()">$patron.getFullName()</a></li>
+#end
+</ul>
 <br>
 <br>
 <h2>Authors List</h2>
@@ -46,6 +51,6 @@ index.vtl
 <h2>Books List</h2>
 <ul>
 #foreach ($book in $books)
-	<li><a href="/book/$book.getId()">$book.getTitle()</a> 
+	<li><a href="/book/$book.getId()">$book.getTitle()</a>
 #end
 </ul>
