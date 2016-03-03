@@ -50,4 +50,11 @@ public class CheckoutTest {
 		assertTrue(Checkout.all().get(0).equals(testCheckout));
 	}
 
+	@Test
+	public void find_returnsCorrectCheckoutObject_true(){
+		Checkout testCheckout = new Checkout(1, 1);
+		testCheckout.save();
+		Checkout savedCheckout = Checkout.find(testCheckout.getId());
+		assertTrue(testCheckout.equals(savedCheckout));
+	}
 }

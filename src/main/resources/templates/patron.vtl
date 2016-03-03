@@ -8,7 +8,7 @@ patron.vtl
 <h3>All Checked Out Books</h3>
 <ul>
 #foreach ($checkout in $checkouts)
-  <li><a href=$>$checkout.getBook().getTitle() - $checkout.getDate()</a></li>
+  <li><a href="/checkout/$checkout.getId()">$checkout.getBook().getTitle() - $checkout.getDate()</a></li>
 #end
 </ul>
 <br>

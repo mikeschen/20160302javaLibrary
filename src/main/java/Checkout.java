@@ -72,6 +72,14 @@ public class Checkout {
     }
   }
 
+  public static Checkout find(int id){
+    String sql = "SELECT id, patron_id AS patronId, book_id AS bookId, checkout_date, due_date, returned FROM checkouts WHERE id=:id";
+    try(Connection con = DB.sql2o.open()) {
+      Checkout checkout = con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Checkout.class);
+      return checkout;
+    }
+  }
+
   public static List<Checkout> all() {
     String sql = "SELECT id, patron_id AS patronId, book_id AS bookId, checkout_date FROM checkouts";
     try(Connection con = DB.sql2o.open()) {
