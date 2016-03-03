@@ -39,6 +39,19 @@ public class App {
       return null;
     });
 
+    //CREATE PATRON OBJECT
+    post("/patron/new", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String firstName = request.queryParams("patronFirstName");
+      String lastName = request.queryParams("patronLastName");
+      Patron newPatron = new Patron(firstName, lastName);
+      // newPatron.save();
+      response.redirect("/");
+      return null;
+    });
+
+    
+
     //VIEW INDIVIDUAL BOOK
     get("/book/:id", (request, response) -> {
 			HashMap<String, Object> model = new HashMap<String, Object>();
@@ -51,15 +64,23 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    //VIEW INDIVIDUAL AUTHOR
+    get("/author/:id", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Author author = Author.find(Integer.parseInt(request.params(":id")));
+      model.put("author", author);
+      model.put("books", author.getBooks());
+      model.put("template", "templates/author.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     //UPDATE BOOK TITLE
     post("/book/:id/update-title", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Book book = Book.find(Integer.parseInt(request.params(":id")));
       String newTitle = request.queryParams("newBookTitle");
       book.updateTitle(newTitle);
-
       response.redirect(String.format("/book/%d", book.getId()));
-
       return null;
     });
 
@@ -76,11 +97,8 @@ public class App {
     post("/book/:id/assign-author", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Book book = Book.find(Integer.parseInt(request.params(":id")));
-
       int authorId = Integer.valueOf(request.queryParams("authorId"));
-
       book.assignToAuthor(authorId);
-
       String url = String.format("/book/%d", book.getId());
       response.redirect(url);
       return null;
@@ -109,18 +127,12 @@ public class App {
     //CREATE NEW COPIES OBJECT
     post("/book/:id/copy/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-
       Book book = Book.find(Integer.parseInt(request.params(":id")));
-
       int count = Integer.parseInt(request.queryParams("copyCount"));
-
       Copy newCopy = new Copy(count);
-
       newCopy.save(book.getId());
-
       String url = String.format("/book/%d", book.getId());
       response.redirect(url);
-
       return null;
     });
 

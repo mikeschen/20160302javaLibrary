@@ -4,7 +4,6 @@ import org.sql2o.*;
 import java.util.Arrays;
 import java.util.List;
 
-//Update Class name here and file name
 public class AuthorTest {
 
 	@Rule

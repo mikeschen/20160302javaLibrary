@@ -1,0 +1,15 @@
+author.vtl
+
+<h1>Author: $author.getName()</h1>
+<br>
+<p><strong>Name:</strong> $author.getName()</p>
+<p><strong>Author ID:</strong> $author.getId()</p>
+<br>
+<h3>All Books by $author.getName()</h3>
+<ul>
+#foreach ($book in $books)
+  <li>$book.getTitle()</li>
+#end
+</ul>
+<br>
+<a href="/">Back to Main</a>

@@ -79,13 +79,13 @@ public class BookTest {
 	}
 
 	//test to check out a book
-	@Test
-	public void checkOut_changeValueOfIsCheckedOutPropertyFromFalseToTrue_true(){
-		Book testBook = new Book("Lord of the Rings");
-    testBook.save();
-		testBook.checkOut();
-		assertEquals(Book.find(testBook.getId()).getIsCheckedOut(), true);
-	}
+	// @Test
+	// public void checkOut_changeValueOfIsCheckedOutPropertyFromFalseToTrue_true(){
+	// 	Book testBook = new Book("Lord of the Rings");
+ //    testBook.save();
+	// 	testBook.checkOut();
+	// 	assertEquals(Book.find(testBook.getId()).getIsCheckedOut(), true);
+	// }
 
 	@Test
 	public void checkIn_changeValueOfIsCheckedOutPropertyFromTrueToFalse_true(){

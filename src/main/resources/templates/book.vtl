@@ -5,9 +5,17 @@ book.vtl
 <p><strong>Title:</strong> $book.getTitle()</p>
 <p><strong>Book ID:</strong> $book.getId()</p>
 <p><strong>Number of available copies:</strong>$copy.getCount()</p>
+<br>
+<h3>List of Authors for $book.getTitle()</h3>
+<ul>
+#foreach ($author in $assignedAuthors)
+  <li>$author.getName()</li>
+#end
+</ul>
+<br>
+<h1>Actions</h1>
 <form action="/book/$book.getId()/assign-author" method="post" class="form-inline">
 <div class="form-group">
-	<label for="authorId">Select an Author</label>
 	<select id="authorId" name="authorId" type="text">
 	#foreach($author in $authors)
 	<option value="$author.getId()">$author.getName()</option>
@@ -17,18 +25,11 @@ book.vtl
 <button type="submit" class="btn btn-success">Assign To Author</button>
 </form>
 <br>
-<h3>List of Authors for $book.getTitle()</h3>
-<ul>
-#foreach ($author in $assignedAuthors)
-  <li>$author.getName()</li>
-#end
-</ul>
-<br>
 <form action="/book/$book.getId()/copy/" method="post" class="form-inline">
 	<div class="form-group">
 		<input id="copyCount" name="copyCount" type="number" class="form-control">
 	</div>
-	<button type="submit" class="btn btn-success">Number of copies in stock</button>
+	<button type="submit" class="btn btn-success">Set Initial Count</button>
 </form>
 <br>
 <form action="/book/$book.getId()/update-title" method="post" class="form-inline">

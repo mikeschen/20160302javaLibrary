@@ -1,5 +1,16 @@
 index.vtl
 
+<h3>Add an Patron</h3>
+<hr>
+<!-- FORM TO ADD PATRON -->
+<form action="/patron/new" method="post" class="form-inline">
+	<div class="form-group">
+		<input id="PatronFirstName" name="PatronFirstName" type="text" class="form-control" placeholder="First Name">
+		<input id="PatronLastName" name="PatronLastName" type="text" class="form-control" placeholder="Last Name">
+		<button type="submit" class="btn btn-success">Add Patron</button>
+	</div>
+</form>
+
 <h3>Add an Author</h3>
 <hr>
 <!-- FORM TO ADD AUTHOR -->
@@ -21,21 +32,20 @@ index.vtl
 </form>
 <br>
 <br>
-<h2>List all Books</h2>
+<h2>Patrons List</h2>
+<br>
+<br>
+<h2>Authors List</h2>
 <ul>
-#foreach ($book in $books)
-  #if($book.getIsCheckedOut() == true)
-  <li><a href="/book/$book.getId()">$book.getTitle()</a>- Currently Checked Out</li>
-	#else
-	<li><a href="/book/$book.getId()">$book.getTitle()</a>- Currently Available</li>
-	#end
+#foreach ($author in $authors)
+  <li><a href="/author/$author.getId()">$author.getName()</a></li>
 #end
 </ul>
 <br>
 <br>
-<h2>List all Authors</h2>
+<h2>Books List</h2>
 <ul>
-#foreach ($author in $authors)
-  <li>$author.getName()</li>
+#foreach ($book in $books)
+	<li><a href="/book/$book.getId()">$book.getTitle()</a> 
 #end
 </ul>
