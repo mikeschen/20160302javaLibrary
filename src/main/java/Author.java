@@ -67,7 +67,7 @@ public class Author {
 
   public List<Book> getBooks(){
     try(Connection con = DB.sql2o.open()){
-        String sql = "SELECT books.id, books.title, books.isCheckedOut FROM books JOIN authors_books ON (books.id = authors_books.book_id) JOIN authors ON (authors_books.author_id = authors.id) WHERE authors.id = :author_id;";
+        String sql = "SELECT books.id, books.title FROM books JOIN authors_books ON (books.id = authors_books.book_id) JOIN authors ON (authors_books.author_id = authors.id) WHERE authors.id = :author_id;";
         List<Book> books = con.createQuery(sql).addParameter("author_id", this.getId()).executeAndFetch(Book.class);
         return books;
     }
