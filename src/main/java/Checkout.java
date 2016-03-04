@@ -60,11 +60,6 @@ public class Checkout {
     return returned;
   }
 
-
-
-
-
-
   @Override
   public boolean equals(Object otherCheckout) {
     if (!(otherCheckout instanceof Checkout)) {
