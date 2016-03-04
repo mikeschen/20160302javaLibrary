@@ -5,10 +5,21 @@ patron.vtl
 <p><strong>First Name:</strong> $patron.getFirstName()</p>
 <p><strong>Last Name:</strong> $patron.getLastName()</p>
 <br>
+<ul>
 <h3>All Checked Out Books</h3>
 <ul>
-#foreach ($checkout in $checkouts)
+#foreach($checkout in $checkouts)
+  #if(!$checkout.isReturned())
   <li><a href="/checkout/$checkout.getId()">$checkout.getBook().getTitle() - $checkout.getDate()</a></li>
+  #end
+#end
+</ul>
+<h3>All Returned Books</h3>
+<ul>
+#foreach($checkout in $checkouts)
+  #if($checkout.isReturned())
+  <li>$checkout.getBook().getTitle() - $checkout.getDate()</li>
+  #end
 #end
 </ul>
 <br>

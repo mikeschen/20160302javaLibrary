@@ -55,6 +55,16 @@ public class Checkout {
       this.due_date = date;
   }
 
+  //implement method to check if book is returned or not
+  public boolean isReturned(){
+    return returned;
+  }
+
+
+
+
+
+
   @Override
   public boolean equals(Object otherCheckout) {
     if (!(otherCheckout instanceof Checkout)) {
