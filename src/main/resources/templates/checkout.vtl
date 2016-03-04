@@ -1,1 +1,15 @@
 checkout.vtl
+
+<h1>Checkout: $checkout.getId()</h1>
+<br>
+<p><strong>Patron ID:</strong> $checkout.getPatronId()</p>
+<p><strong>Book ID:</strong> $checkout.getBookId()</p>
+<p><strong>Checkout Date:</strong> $checkout.getDate()</p>
+<p><strong>Due Date:</strong> $checkout.getDueDate()</p>
+<p><strong>Returned?:</strong> $checkout.getReturned()</p>
+<br>
+<form class="form-inline" action="/checkout/$checkout.getId()/checkin" method="post">
+  <input id="bookId" name="bookId" type="hidden" value="$book.getId()">
+  <button type="submit" class="btn btn-success">Check this back in</button>
+</form>
+<br>

@@ -64,20 +64,22 @@ public class App {
     });
 
     //CHECKIN A BOOK
-
+    post("/checkout/:id/checkin", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Checkout checkinBook = Checkout.find(Integer.parseInt(request.params(":id")));
+      checkinBook.checkin();
+      response.redirect("/");
+      return null;
+    });
 
     //VIEW INDIVIDUAL CHECKOUT
     get("/checkout/:id", (request, response) -> {
 			HashMap<String, Object> model = new HashMap<String, Object>();
-			// Book book = Book.find(Integer.parseInt(request.params(":id")));
-			// model.put("book", book);
-      // model.put("assignedAuthors", book.getAuthors());
-      // model.put("authors", Author.all());
+			Checkout checkout = Checkout.find(Integer.parseInt(request.params(":id")));
+			model.put("checkout", checkout);
  		  model.put("template", "templates/checkout.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-
-
 
     //VIEW INDIVIDUAL BOOK
     get("/book/:id", (request, response) -> {
@@ -149,7 +151,5 @@ public class App {
       response.redirect(url);
       return null;
     });
-
-
   }
 }

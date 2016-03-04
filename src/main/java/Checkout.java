@@ -38,6 +38,14 @@ public class Checkout {
     return checkout_date;
   }
 
+  public Date getDueDate(){
+    return due_date;
+  }
+
+  public boolean getReturned(){
+    return returned;
+  }
+
   public void initDueDate() {
       Date date = new Date();
       Calendar c = Calendar.getInstance();
@@ -45,10 +53,6 @@ public class Checkout {
       c.add(Calendar.WEEK_OF_MONTH, 2);
       date = c.getTime();
       this.due_date = date;
-  }
-
-  public boolean getReturned() {
-    return returned;
   }
 
   @Override
@@ -69,6 +73,19 @@ public class Checkout {
     try(Connection con = DB.sql2o.open()){
       String copy = "UPDATE books SET copies=copies-1 WHERE id = :book_id";
       con.createQuery(copy).addParameter("book_id", this.bookId).executeUpdate();
+    }
+  }
+
+  public void checkin(){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "UPDATE checkouts SET returned = true WHERE id=:id";
+      con.createQuery(sql)
+      .addParameter("id", id)
+      .executeUpdate();
+      String sql2 = "UPDATE books SET copies=copies+1 WHERE id = :book_id";
+      con.createQuery(sql2).
+      addParameter("book_id", this.bookId)
+      .executeUpdate();
     }
   }
 
